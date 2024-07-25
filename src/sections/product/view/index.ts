@@ -1,4 +1,5 @@
 export * from './read-list-view';
+export * from './read-create-view';
 
 export * from './product-edit-view';
 

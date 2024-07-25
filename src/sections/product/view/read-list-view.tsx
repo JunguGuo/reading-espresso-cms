@@ -3,6 +3,7 @@
 import type { UseSetStateReturn } from 'src/hooks/use-set-state';
 import type { IReadItem, IReadTableFilters } from 'src/types/read';
 import type {
+  GridSlots,
   GridColDef,
   GridRowSelectionModel,
   GridColumnVisibilityModel,
@@ -289,11 +290,11 @@ export function ReadListView() {
           action={
             <Button
               component={RouterLink}
-              href={paths.dashboard.product.new}
+              href={paths.dashboard.read.new}
               variant="contained"
               startIcon={<Iconify icon="mingcute:add-line" />}
             >
-              New product
+              New Read
             </Button>
           }
           sx={{ mb: { xs: 3, md: 5 } }}
