@@ -19,7 +19,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
-import { _tags, READ_CURATOR_OPTIONS } from 'src/_mock';
+import { titleCase } from 'src/utils/change-case';
+
+import { AddRead, UpdateRead } from 'src/actions/read';
+import { READ_GENRE, READ_TOPICS, READ_AGE_OPTIONS, READ_CURATOR_OPTIONS } from 'src/_mock';
 
 import { toast } from 'src/components/snackbar';
 import { Form, Field } from 'src/components/hook-form';
@@ -30,15 +33,22 @@ export type NewReadSchemaType = zod.infer<typeof NewReadSchema>;
 
 export const NewReadSchema = zod.object({
   title: zod.string().min(1, { message: 'title is required!' }),
-  // description: schemaHelper.editor({ message: { required_error: 'Description is required!' } }),
+  author: zod.string().min(1, { message: 'author is required!' }),
+  // content: schemaHelper.editor({ message: { required_error: 'content is required!' } }),
+  content: zod.string().min(10, { message: 'content is required! 10 characters minimum!' }),
   // images: schemaHelper.files({ message: { required_error: 'Images is required!' } }),
-  yearStr: zod.string().min(1, { message: 'Year is required!' }),
+  yearStr: zod.string().min(1, { message: 'year is required!' }),
+  region: zod.string(),
+  intro: zod.string().min(1, { message: 'intro is required!' }),
+  comment: zod.string().min(1, { message: 'comment is required!' }),
   // sku: zod.string().min(1, { message: 'Read sku is required!' }),
   // quantity: zod.number().min(1, { message: 'Quantity is required!' }),
   // colors: zod.string().array().nonempty({ message: 'Choose at least one option!' }),
   // sizes: zod.string().array().nonempty({ message: 'Choose at least one option!' }),
   topics: zod.string().array().min(2, { message: 'Must have at least 2 topics!' }),
   genre: zod.string().array().min(1, { message: 'Must have at least 1 genre!' }),
+  curator: zod.string(),
+  age: zod.coerce.number(),
   // gender: zod.string().array().nonempty({ message: 'Choose at least one option!' }),
   // price: zod.number().min(1, { message: 'Price should not be $0.00' }),
   // Not required
@@ -64,17 +74,26 @@ export function ReadNewEditForm({ currentRead }: Props) {
   const defaultValues = useMemo(
     () => ({
       title: currentRead?.title || '',
-      // description: currentRead?.description || '',
+
       author: currentRead?.author || '',
       // images: currentRead?.images || [],
       //
       yearStr: currentRead?.yearStr || '',
+      region: currentRead?.region || '',
+      curator: currentRead?.curator || READ_CURATOR_OPTIONS[0].value,
+      intro: currentRead?.intro || '',
+      content: currentRead?.content || '',
+      comment: currentRead?.comment || '',
+      // description: currentRead?.description || '',
+      // intro: currentRead?.intro || '',
+      // available: {
       // sku: currentRead?.sku || '',
       // price: currentRead?.price || 0,
       // quantity: currentRead?.quantity || 0,
       // priceSale: currentRead?.priceSale || 0,
       topics: currentRead?.topics || [],
-      genres: currentRead?.genre || [],
+      genre: currentRead?.genre || [],
+      age: currentRead?.age || READ_AGE_OPTIONS[0].value,
       // taxes: currentRead?.taxes || 0,
       // gender: currentRead?.gender || [],
       // category: currentRead?.category || PRODUCT_CATEGORY_GROUP_OPTIONS[0].classify[1],
@@ -117,11 +136,15 @@ export function ReadNewEditForm({ currentRead }: Props) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // await new Promise((resolve) => setTimeout(resolve, 500));
+      if (currentRead) {
+        console.log(data);
+        await UpdateRead(currentRead.id, data);
+      } else await AddRead(data);
       reset();
       toast.success(currentRead ? 'Update success!' : 'Create success!');
       router.push(paths.dashboard.read.root);
-      console.info('DATA', data);
+      // console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }
@@ -165,9 +188,9 @@ export function ReadNewEditForm({ currentRead }: Props) {
           <Field.Text name="region" label="Region" />
 
           <Field.Select native name="curator" label="Curator" InputLabelProps={{ shrink: true }}>
-            {READ_CURATOR_OPTIONS.map((category) => (
-              <option key={category.label} value={category.value}>
-                {category.value}
+            {READ_CURATOR_OPTIONS.map((option) => (
+              <option key={option.label} value={option.value}>
+                {option.value}
               </option>
             ))}
           </Field.Select>
@@ -177,7 +200,9 @@ export function ReadNewEditForm({ currentRead }: Props) {
 
         <Stack spacing={1.5}>
           <Typography variant="subtitle2">Content</Typography>
-          <Field.Editor name="content" sx={{ maxHeight: 480 }} />
+          <Field.Text name="content" label="Cntroduction" multiline rows={5} />
+
+          {/* <Field.Editor name="content" sx={{ maxHeight: 480 }} /> */}
         </Stack>
 
         <Stack spacing={1}>
@@ -220,11 +245,11 @@ export function ReadNewEditForm({ currentRead }: Props) {
           multiple
           freeSolo
           disableCloseOnSelect
-          options={_tags.map((option) => option)}
+          options={READ_TOPICS.map((option) => option)}
           getOptionLabel={(option) => option}
           renderOption={(props, option) => (
             <li {...props} key={option}>
-              {option}
+              {titleCase(option)}
             </li>
           )}
           renderTags={(selected, getTagProps) =>
@@ -232,7 +257,7 @@ export function ReadNewEditForm({ currentRead }: Props) {
               <Chip
                 {...getTagProps({ index })}
                 key={option}
-                label={option}
+                label={titleCase(option)}
                 size="small"
                 color="info"
                 variant="soft"
@@ -248,11 +273,11 @@ export function ReadNewEditForm({ currentRead }: Props) {
           multiple
           freeSolo
           disableCloseOnSelect
-          options={_tags.map((option) => option)}
+          options={READ_GENRE.map((option) => option)}
           getOptionLabel={(option) => option}
           renderOption={(props, option) => (
             <li {...props} key={option}>
-              {option}
+              {titleCase(option)}
             </li>
           )}
           renderTags={(selected, getTagProps) =>
@@ -260,9 +285,9 @@ export function ReadNewEditForm({ currentRead }: Props) {
               <Chip
                 {...getTagProps({ index })}
                 key={option}
-                label={option}
+                label={titleCase(option)}
                 size="small"
-                color="info"
+                color="success"
                 variant="soft"
               />
             ))
@@ -271,10 +296,10 @@ export function ReadNewEditForm({ currentRead }: Props) {
 
         <Stack spacing={1}>
           <Typography variant="subtitle2">Age Group</Typography>
-          <Field.Select native name="curator" InputLabelProps={{ shrink: true }}>
-            {READ_CURATOR_OPTIONS.map((category) => (
-              <option key={category.label} value={category.value}>
-                {category.value}
+          <Field.Select native name="age" InputLabelProps={{ shrink: true }}>
+            {READ_AGE_OPTIONS.map((option) => (
+              <option key={option.label} value={option.value}>
+                {option.label}
               </option>
             ))}
           </Field.Select>

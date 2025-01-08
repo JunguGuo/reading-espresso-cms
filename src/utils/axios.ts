@@ -7,7 +7,7 @@ import { CONFIG } from 'src/config-global';
 // ----------------------------------------------------------------------
 
 const axiosInstance = axios.create({ baseURL: CONFIG.site.serverUrl });
-const axiosInstance2 = axios.create({ baseURL: CONFIG.site.databaseUrl });
+export const axiosInstance2 = axios.create({ baseURL: CONFIG.site.databaseUrl });
 
 axiosInstance.interceptors.response.use(
   (response) => response,
@@ -78,7 +78,7 @@ export const endpoints = {
   },
   read: {
     list: '/api/v1/reads',
-    details: '/api/read/details',
+    details: '/api/v1/reads/',
     latest: '/api/read/latest',
     search: '/api/read/search',
   },

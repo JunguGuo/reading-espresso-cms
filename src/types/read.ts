@@ -11,6 +11,7 @@ export type IReadItem = {
   curator: string;
   comment: string;
   region: string;
+  publish: string;
   createdAt: {
     $date: string;
   };

@@ -3,7 +3,7 @@ import type { IReadItem } from 'src/types/read';
 import useSWR from 'swr';
 import { useMemo } from 'react';
 
-import { fetcher, fetcher2, endpoints } from 'src/utils/axios';
+import { fetcher, fetcher2, endpoints, axiosInstance2 } from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +18,39 @@ const swrOptions = {
 type ReadsData = {
   reads: IReadItem[];
 };
+
+// ----------------------------------------------------------------------
+
+export async function AddRead(read: any) {
+  try {
+    const response = await axiosInstance2.post(endpoints.read.list, read);
+    console.log('Post Response:', response.data);
+  } catch (error) {
+    console.error('Failed to make POST request:', error);
+  }
+}
+
+// ----------------------------------------------------------------------
+
+export async function UpdateRead(readId: string, read: any) {
+  try {
+    const response = await axiosInstance2.patch(`${endpoints.read.list}/${readId}`, read);
+    console.log('Update Response:', response.data);
+  } catch (error) {
+    console.error('Failed to make PATCH request:', error);
+  }
+}
+
+// ----------------------------------------------------------------------
+
+export async function DeleteRead(readId: string) {
+  try {
+    const response = await axiosInstance2.delete(`${endpoints.read.list}/${readId}`);
+    console.log('Delete Response:', response.data);
+  } catch (error) {
+    console.error('Failed to make DELETE request:', error);
+  }
+}
 
 export function useGetReads() {
   const url = endpoints.read.list;

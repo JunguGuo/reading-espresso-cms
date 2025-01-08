@@ -32,9 +32,9 @@ import { RouterLink } from 'src/routes/components';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useSetState } from 'src/hooks/use-set-state';
 
-import { useGetReads } from 'src/actions/read';
 import { READ_REGION_OPTIONS } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
+import { DeleteRead, useGetReads } from 'src/actions/read';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -58,6 +58,7 @@ import {
 const CURATOR_OPTIONS = [
   { value: 'Jungu Guo', label: 'Jungu' },
   { value: 'Raymond Rozman', label: 'Raymond' },
+  { value: 'Other', label: 'Other' },
 ];
 
 const HIDE_COLUMNS = { category: false };
@@ -140,8 +141,19 @@ export function ReadListView() {
   // const dataFiltered = reads;
 
   const handleDeleteRow = useCallback(
-    (id: string) => {
+    async (id: string) => {
       const deleteRow = tableData.filter((row) => row.id !== id);
+
+      const deletedRow = tableData.find((row) => row.id === id);
+
+      if (!deletedRow) return;
+
+      // Delete the read from the database here.
+      try {
+        await DeleteRead(deletedRow.id);
+      } catch (err) {
+        console.error(err);
+      }
 
       toast.success('Delete success!');
 
@@ -150,8 +162,20 @@ export function ReadListView() {
     [tableData]
   );
 
-  const handleDeleteRows = useCallback(() => {
+  const handleDeleteRows = useCallback(async () => {
     const deleteRows = tableData.filter((row) => !selectedRowIds.includes(row.id));
+
+    const deletedRows = tableData.filter((row) => selectedRowIds.includes(row.id));
+
+    if (!deletedRows) return;
+
+    deletedRows.forEach(async (row) => {
+      try {
+        await DeleteRead(row.id);
+      } catch (err) {
+        console.error(err);
+      }
+    });
 
     toast.success('Delete success!');
 
@@ -160,7 +184,7 @@ export function ReadListView() {
 
   const handleEditRow = useCallback(
     (id: string) => {
-      router.push(paths.dashboard.product.edit(id));
+      router.push(paths.dashboard.read.edit(id));
     },
     [router]
   );
@@ -217,6 +241,7 @@ export function ReadListView() {
       headerName: 'Region',
       width: 160,
       type: 'singleSelect',
+      editable: true,
       valueOptions: READ_REGION_OPTIONS,
       renderCell: (params) => <RenderCellRegion params={params} />,
     },
@@ -232,8 +257,7 @@ export function ReadListView() {
       headerName: 'Publish',
       width: 110,
       type: 'singleSelect',
-      editable: true,
-      valueOptions: CURATOR_OPTIONS,
+      editable: false,
       renderCell: (params) => <RenderCellPublish params={params} />,
     },
     {
@@ -284,7 +308,7 @@ export function ReadListView() {
           heading="List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'Product', href: paths.dashboard.product.root },
+            { name: 'Read', href: paths.dashboard.read.root },
             { name: 'List' },
           ]}
           action={
