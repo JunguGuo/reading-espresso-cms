@@ -2,8 +2,6 @@ import { paths } from 'src/routes/paths';
 
 import { CONFIG } from 'src/config-global';
 
-import { Label } from 'src/components/label';
-import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -50,13 +48,13 @@ export const navData = [
   {
     subheader: 'Overview',
     items: [
-      { title: 'App', path: paths.dashboard.root, icon: ICONS.dashboard },
-      { title: 'Ecommerce', path: paths.dashboard.general.ecommerce, icon: ICONS.ecommerce },
-      { title: 'Analytics', path: paths.dashboard.general.analytics, icon: ICONS.analytics },
-      { title: 'Banking', path: paths.dashboard.general.banking, icon: ICONS.banking },
-      { title: 'Booking', path: paths.dashboard.general.booking, icon: ICONS.booking },
-      { title: 'File', path: paths.dashboard.general.file, icon: ICONS.file },
-      { title: 'Course', path: paths.dashboard.general.course, icon: ICONS.course },
+      { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
+      // { title: 'Ecommerce', path: paths.dashboard.general.ecommerce, icon: ICONS.ecommerce },
+      // { title: 'Analytics', path: paths.dashboard.general.analytics, icon: ICONS.analytics },
+      // { title: 'Banking', path: paths.dashboard.general.banking, icon: ICONS.banking },
+      // { title: 'Booking', path: paths.dashboard.general.booking, icon: ICONS.booking },
+      // { title: 'File', path: paths.dashboard.general.file, icon: ICONS.file },
+      // { title: 'Course', path: paths.dashboard.general.course, icon: ICONS.course },
     ],
   },
   /**
@@ -65,30 +63,30 @@ export const navData = [
   {
     subheader: 'Management',
     items: [
-      {
-        title: 'User',
-        path: paths.dashboard.user.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Profile', path: paths.dashboard.user.root },
-          { title: 'Cards', path: paths.dashboard.user.cards },
-          { title: 'List', path: paths.dashboard.user.list },
-          { title: 'Create', path: paths.dashboard.user.new },
-          { title: 'Edit', path: paths.dashboard.user.demo.edit },
-          { title: 'Account', path: paths.dashboard.user.account },
-        ],
-      },
-      {
-        title: 'Product',
-        path: paths.dashboard.product.root,
-        icon: ICONS.product,
-        children: [
-          { title: 'List', path: paths.dashboard.product.root },
-          { title: 'Details', path: paths.dashboard.product.demo.details },
-          { title: 'Create', path: paths.dashboard.product.new },
-          { title: 'Edit', path: paths.dashboard.product.demo.edit },
-        ],
-      },
+      // {
+      //   title: 'User',
+      //   path: paths.dashboard.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'Profile', path: paths.dashboard.user.root },
+      //     { title: 'Cards', path: paths.dashboard.user.cards },
+      //     { title: 'List', path: paths.dashboard.user.list },
+      //     { title: 'Create', path: paths.dashboard.user.new },
+      //     { title: 'Edit', path: paths.dashboard.user.demo.edit },
+      //     { title: 'Account', path: paths.dashboard.user.account },
+      //   ],
+      // },
+      // {
+      //   title: 'Product',
+      //   path: paths.dashboard.product.root,
+      //   icon: ICONS.product,
+      //   children: [
+      //     { title: 'List', path: paths.dashboard.product.root },
+      //     { title: 'Details', path: paths.dashboard.product.demo.details },
+      //     { title: 'Create', path: paths.dashboard.product.new },
+      //     { title: 'Edit', path: paths.dashboard.product.demo.edit },
+      //   ],
+      // },
       {
         title: 'Read',
         path: paths.dashboard.read.root,
@@ -100,15 +98,15 @@ export const navData = [
           // { title: 'Edit', path: paths.dashboard.read.demo.edit },
         ],
       },
-      {
-        title: 'Order',
-        path: paths.dashboard.order.root,
-        icon: ICONS.order,
-        children: [
-          { title: 'List', path: paths.dashboard.order.root },
-          { title: 'Details', path: paths.dashboard.order.demo.details },
-        ],
-      },
+      // {
+      //   title: 'Order',
+      //   path: paths.dashboard.order.root,
+      //   icon: ICONS.order,
+      //   children: [
+      //     { title: 'List', path: paths.dashboard.order.root },
+      //     { title: 'Details', path: paths.dashboard.order.demo.details },
+      //   ],
+      // },
       // {
       //   title: 'Invoice',
       //   path: paths.dashboard.invoice.root,
@@ -172,92 +170,92 @@ export const navData = [
   /**
    * Item State
    */
-  {
-    subheader: 'Misc',
-    items: [
-      {
-        // default roles : All roles can see this entry.
-        // roles: ['user'] Only users can see this item.
-        // roles: ['admin'] Only admin can see this item.
-        // roles: ['admin', 'manager'] Only admin/manager can see this item.
-        // Reference from 'src/guards/RoleBasedGuard'.
-        title: 'Permission',
-        path: paths.dashboard.permission,
-        icon: ICONS.lock,
-        roles: ['admin', 'manager'],
-        caption: 'Only admin can see this item',
-      },
-      {
-        title: 'Level',
-        path: '#/dashboard/menu_level',
-        icon: ICONS.menuItem,
-        children: [
-          {
-            title: 'Level 1a',
-            path: '#/dashboard/menu_level/menu_level_1a',
-            children: [
-              {
-                title: 'Level 2a',
-                path: '#/dashboard/menu_level/menu_level_1a/menu_level_2a',
-              },
-              {
-                title: 'Level 2b',
-                path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b',
-                children: [
-                  {
-                    title: 'Level 3a',
-                    path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b/menu_level_3a',
-                  },
-                  {
-                    title: 'Level 3b',
-                    path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b/menu_level_3b',
-                  },
-                ],
-              },
-            ],
-          },
-          { title: 'Level 1b', path: '#/dashboard/menu_level/menu_level_1b' },
-        ],
-      },
-      {
-        title: 'Disabled',
-        path: '#disabled',
-        icon: ICONS.disabled,
-        disabled: true,
-      },
-      {
-        title: 'Label',
-        path: '#label',
-        icon: ICONS.label,
-        info: (
-          <Label
-            color="info"
-            variant="inverted"
-            startIcon={<Iconify icon="solar:bell-bing-bold-duotone" />}
-          >
-            NEW
-          </Label>
-        ),
-      },
-      {
-        title: 'Caption',
-        path: '#caption',
-        icon: ICONS.menuItem,
-        caption:
-          'Quisque malesuada placerat nisl. In hac habitasse platea dictumst. Cras id dui. Pellentesque commodo eros a enim. Morbi mollis tellus ac sapien.',
-      },
-      {
-        title: 'Params',
-        path: '/dashboard/params?id=e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1',
-        icon: ICONS.parameter,
-      },
-      {
-        title: 'External link',
-        path: 'https://www.google.com/',
-        icon: ICONS.external,
-        info: <Iconify width={18} icon="prime:external-link" />,
-      },
-      { title: 'Blank', path: paths.dashboard.blank, icon: ICONS.blank },
-    ],
-  },
+  // {
+  //   subheader: 'Misc',
+  //   items: [
+  //     {
+  //       // default roles : All roles can see this entry.
+  //       // roles: ['user'] Only users can see this item.
+  //       // roles: ['admin'] Only admin can see this item.
+  //       // roles: ['admin', 'manager'] Only admin/manager can see this item.
+  //       // Reference from 'src/guards/RoleBasedGuard'.
+  //       title: 'Permission',
+  //       path: paths.dashboard.permission,
+  //       icon: ICONS.lock,
+  //       roles: ['admin', 'manager'],
+  //       caption: 'Only admin can see this item',
+  //     },
+  //     {
+  //       title: 'Level',
+  //       path: '#/dashboard/menu_level',
+  //       icon: ICONS.menuItem,
+  //       children: [
+  //         {
+  //           title: 'Level 1a',
+  //           path: '#/dashboard/menu_level/menu_level_1a',
+  //           children: [
+  //             {
+  //               title: 'Level 2a',
+  //               path: '#/dashboard/menu_level/menu_level_1a/menu_level_2a',
+  //             },
+  //             {
+  //               title: 'Level 2b',
+  //               path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b',
+  //               children: [
+  //                 {
+  //                   title: 'Level 3a',
+  //                   path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b/menu_level_3a',
+  //                 },
+  //                 {
+  //                   title: 'Level 3b',
+  //                   path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b/menu_level_3b',
+  //                 },
+  //               ],
+  //             },
+  //           ],
+  //         },
+  //         { title: 'Level 1b', path: '#/dashboard/menu_level/menu_level_1b' },
+  //       ],
+  //     },
+  //     {
+  //       title: 'Disabled',
+  //       path: '#disabled',
+  //       icon: ICONS.disabled,
+  //       disabled: true,
+  //     },
+  //     {
+  //       title: 'Label',
+  //       path: '#label',
+  //       icon: ICONS.label,
+  //       info: (
+  //         <Label
+  //           color="info"
+  //           variant="inverted"
+  //           startIcon={<Iconify icon="solar:bell-bing-bold-duotone" />}
+  //         >
+  //           NEW
+  //         </Label>
+  //       ),
+  //     },
+  //     {
+  //       title: 'Caption',
+  //       path: '#caption',
+  //       icon: ICONS.menuItem,
+  //       caption:
+  //         'Quisque malesuada placerat nisl. In hac habitasse platea dictumst. Cras id dui. Pellentesque commodo eros a enim. Morbi mollis tellus ac sapien.',
+  //     },
+  //     {
+  //       title: 'Params',
+  //       path: '/dashboard/params?id=e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1',
+  //       icon: ICONS.parameter,
+  //     },
+  //     {
+  //       title: 'External link',
+  //       path: 'https://www.google.com/',
+  //       icon: ICONS.external,
+  //       info: <Iconify width={18} icon="prime:external-link" />,
+  //     },
+  //     { title: 'Blank', path: paths.dashboard.blank, icon: ICONS.blank },
+  //   ],
+  // },
 ];
