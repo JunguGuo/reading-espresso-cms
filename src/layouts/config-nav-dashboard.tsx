@@ -90,7 +90,7 @@ export const navData = [
       {
         title: 'Read',
         path: paths.dashboard.read.root,
-        icon: ICONS.product,
+        icon: ICONS.file,
         children: [
           { title: 'List', path: paths.dashboard.read.root },
           // { title: 'Details', path: paths.dashboard.read.\.details },
