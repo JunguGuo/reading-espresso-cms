@@ -4,8 +4,9 @@ export const READ_REGION_OPTIONS = [
 ];
 
 export const READ_CURATOR_OPTIONS = [
-  { value: 'Raymond Rozman', label: 'Raymond' },
-  { value: 'Jungu Guo', label: 'Jungu' },
+  { value: 'Raymond Rozman', label: 'Raymond Rozman' },
+  { value: 'Grace French', label: 'Grace French' },
+  { value: 'Jungu Guo', label: 'Jungu Guo' },
 ];
 
 export const READ_AGE_OPTIONS = [

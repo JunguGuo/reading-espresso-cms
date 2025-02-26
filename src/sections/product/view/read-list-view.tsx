@@ -32,9 +32,9 @@ import { RouterLink } from 'src/routes/components';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useSetState } from 'src/hooks/use-set-state';
 
-import { READ_REGION_OPTIONS } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { DeleteRead, useGetReads } from 'src/actions/read';
+import { READ_REGION_OPTIONS, READ_CURATOR_OPTIONS } from 'src/_mock';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -54,12 +54,6 @@ import {
 } from '../read-table-row';
 
 // ----------------------------------------------------------------------
-
-const CURATOR_OPTIONS = [
-  { value: 'Jungu Guo', label: 'Jungu' },
-  { value: 'Raymond Rozman', label: 'Raymond' },
-  { value: 'Other', label: 'Other' },
-];
 
 const HIDE_COLUMNS = { category: false };
 
@@ -409,7 +403,7 @@ function CustomToolbar({
       <GridToolbarContainer>
         <ReadTableToolbar
           filters={filters}
-          options={{ regions: READ_REGION_OPTIONS, curators: CURATOR_OPTIONS }}
+          options={{ regions: READ_REGION_OPTIONS, curators: READ_CURATOR_OPTIONS }}
         />
 
         <GridToolbarQuickFilter />
